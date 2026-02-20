@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morse Code Decoder/Sender</title>
-    <link rel="manifest" href="manifest.json">
+    <title>MC DS | Morse Decoder</title>
+    <link rel="icon" type="image/png" href="./icon-512.png">
+    <link rel="manifest" href="./manifest.json">
     <style>
         :root {
             --bg-color: #0a0c10;
@@ -51,7 +52,6 @@
         #logContainer { background: #010409; padding: 10px; border-radius: 8px; text-align: left; max-height: 150px; overflow-y: auto; margin: 15px 0; border: 1px solid var(--border-color); font-size: 0.85rem; }
         .log-entry { border-bottom: 1px solid #21262d; padding: 5px 0; display: flex; justify-content: space-between; }
 
-        /* Modal & Legal */
         footer { margin-top: 40px; color: #8b949e; font-size: 0.8rem; cursor: pointer; }
         #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: var(--panel-bg); padding: 25px; border-radius: 12px; max-width: 450px; text-align: left; border: 1px solid var(--border-color); }
@@ -67,9 +67,9 @@
 <div id="modal">
     <div class="modal-content">
         <h3 style="color:var(--accent-blue)">MC DS Official License</h3>
-        <p><strong>Owner:</strong> [Exequiel Esrada]</p>
+        <p><strong>Owner:</strong> Exequiel Estrada</p>
         <div class="tos-box">
-            <p><strong>1. Ownership:</strong> MC DS and its logo are the sole property of the Creator.</p>
+            <p><strong>1. Ownership:</strong> MC DS and its logo are the sole property of Exequiel Estrada.</p>
             <p><strong>2. Restrictions:</strong> Unauthorized reproduction or commercial distribution is prohibited.</p>
             <p><strong>3. Use Case:</strong> Designed for personal and educational high-speed Morse communication.</p>
             <p><strong>4. Disclaimer:</strong> Software provided 'as-is' with no liability for communication errors.</p>
@@ -100,10 +100,10 @@
 </div>
 
 <footer onclick="toggleModal(true)">
-    © 2026 <span style="text-decoration: underline;">Created & Owned by Project Creator</span>
-</footer>Exequiel Estrada
+    © 2026 <span style="text-decoration: underline;">Created & Owned by Exequiel Estrada</span>
+</footer>
 
-<script>Exequiel Estrada
+<script>
     const MORSE_MAP = { ".-":"A", "-...":"B", "-.-.":"C", "-..":"D", ".":"E", "..-.":"F", "--.":"G", "....":"H", "..":"I", ".---":"J", "-.-":"K", ".-..":"L", "--":"M", "-.":"N", "---":"O", ".--.":"P", "--.-":"Q", ".-.":"R", "...":"S", "-":"T", "..-":"U", "...-":"V", ".--":"W", "-..-":"X", "-.--":"Y", "--..":"Z", "-----":"0", ".----":"1", "..---":"2", "...--":"3", "....-":"4", ".....":"5", "-....":"6", "--...":"7", "---..":"8", "----.":"9" };
     const REV_MAP = Object.fromEntries(Object.entries(MORSE_MAP).map(([k, v]) => [v, k]));
     REV_MAP[" "] = "/";
@@ -111,10 +111,8 @@
     let audioCtx, analyser, dataArray, signalOn = false, startTime = Date.now(), currentMorse = "";
     let unitTime = 120, signalHistory = [], sessionLog = [];
 
-    // MODAL
     function toggleModal(s) { document.getElementById('modal').style.display = s ? 'flex' : 'none'; }
 
-    // RECEIVER
     document.getElementById('startBtn').addEventListener('click', async () => {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -170,7 +168,6 @@
 
     function clearLog() { sessionLog = []; document.getElementById('logList').innerHTML = ""; display.innerText = "READY"; }
 
-    // TRANSMITTER
     document.getElementById('sendBtn').addEventListener('click', async () => {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const text = document.getElementById('txInput').value.toUpperCase();
@@ -197,7 +194,7 @@
         osc.stop(); document.getElementById('txStatus').innerText = "IDLE";
     });
 
-    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
 </script>
 </body>
 </html>

@@ -87,11 +87,28 @@
         let duration = now - lastTime;
 
         if (currentState !== lastState) {
-            if (!currentState) { // Transition from sound to silence
-                if (duration > 50 && duration < 250) morseBuffer += ".";
-                else if (duration >= 250) morseBuffer += "-";
+            if (!currentState) { // Sound just stopped (End of a dot or dash)
+                if (duration > 30 && duration < 200) morseBuffer += "."; 
+                else if (duration >= 200) morseBuffer += "-";            
                 document.getElementById('bufferDisplay').textContent = morseBuffer;
             }
+            lastTime = now;
+            lastState = currentState;
+        } else if (!currentState && duration > 600 && morseBuffer !== "") { 
+            // If it's been silent for 0.6 seconds, finish the letter
+            decodeBuffer();
+        }
+        requestAnimationFrame(update);
+    }
+
+    function decodeBuffer() {
+        const char = morseCode[morseBuffer] || "?";
+        const output = document.getElementById('output');
+        if (output.textContent === "TEXT WILL APPEAR HERE") output.textContent = "";
+        output.textContent += char;
+        morseBuffer = "";
+        document.getElementById('bufferDisplay').textContent = "READY";
+    }            }
             lastTime = now;
             lastState = currentState;
         } else if (!currentState && duration > 1000 && morseBuffer !== "") {

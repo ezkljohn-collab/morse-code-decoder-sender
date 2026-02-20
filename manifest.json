@@ -1,15 +1,18 @@
 {
-  "name": "Morse Code Decoder/Sender",
   "short_name": "MC DS",
-  "start_url": "index.html",
-  "display": "standalone",
-  "background_color": "#0a0c10",
-  "theme_color": "#58a6ff",
+  "name": "Morse Code Decoder/Sender",
   "icons": [
     {
       "src": "icon-512.png",
+      "type": "image/png",
       "sizes": "512x512",
-      "type": "image/png"
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "start_url": "./index.html",
+  "background_color": "#0a0c10",
+  "display": "standalone",
+  "scope": "./",
+  "theme_color": "#58a6ff",
+  "description": "High-speed Morse communication tool created by Exequiel Estrada."
 }
